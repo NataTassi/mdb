@@ -1,0 +1,80 @@
+What is Next.js?
+
+Next.js is a JavaScript framework that enables you to build superfast and extremely user-friendly static websites, as well as web applications using React.
+In fact, thanks to Automatic Static Optimization, “static” and “dynamic” become one now.
+This feature allows Next.js to build hybrid applications that contain both server-side rendered and statically generated pages.
+In other words, statically generated pages are still reactive: Next.js will hydrate your application client-side to give it full interactivity.
+
+Next.js is widely used by the biggest and most popular companies all over the world like Netflix, Uber, Starbucks, or Twitch.
+
+Features:
+
+- Image Optimization:               <Image> and Automatic Image Optimization with instant builds.
+- Internationalization:             Built-in Domain & Subdomain Routing and Automatic Language detection.
+- Next.js Analytics:                A true lighthouse score based on real visitor data & page-by-page insights
+- Zero Config:                      Automatic compilation and bundling. Optimized for production from the start.
+- Hybrid: SSG and SSR:              Pre-render pages at build time (SSG) or request time (SSR) in a single project.
+- Incremental Static Regeneration:  Add and update statically pre-rendered pages incrementally after build time.
+- TypeScript Support:               Automatic TypeScript configuration and compilation.
+- Fast Refresh:                     Fast, reliable live-editing experience, as proven at Facebook scale.
+- File-system Routing:              Every component in the pages directory becomes a route.
+- API Routes:                       Optionally create API endpoints to provide backend functionality.
+- Code-splitting and Bundling:      Optimized bundle splitting algorithm created by the Google Chrome team.
+
+
+Installation:
+
+1. 'npm install next react react-dom', 'yarn add next react react-dom' or 'pnpm add next react react-dom'
+
+2. Open package.json and add the following scripts:
+
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint"
+}
+
+3. Create two directories, pages and public, at the root of your application:
+
+pages - Associated with a route based on their file name. For example pages/about.js is mapped to /about
+public - Stores static assets such as images, fonts, etc. Files inside public directory can then be referenced by your code starting from the base URL (/).
+
+Next.js is built around the concept of pages. A page is a React Component exported from a .js, .jsx, .ts, or .tsx file in the pages directory.
+You can even add dynamic route parameters with the filename.
+
+4. Inside the pages directory add the index.js file to get started. This is the page that is rendered when the user visits the root of your application
+
+Populate pages/index.js with the following contents:
+
+function HomePage() {
+  return <div>Welcome to Next.js!</div>
+}
+
+export default HomePage
+
+5. After the set up is complete:
+Run 'npm run dev', 'yarn dev' or 'pnpm dev' to start the development server on http://localhost:3000
+
+
+References:
+https://nextjs.org/learn/foundations/about-nextjs
+https://nextjs.org/docs/getting-started
+
+https://nextjs.org/docs/api-routes/introduction
+https://nextjs.org/docs/basic-features/data-fetching/client-side
+
+https://nextjs.org/docs/basic-features/built-in-css-support
+https://nextjs.org/blog/styling-next-with-styled-jsx
+https://nextjs.org/docs/api-reference/next/image#loading
+
+https://nextjs.org/docs/advanced-features/module-path-aliases
+https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config
+https://nextjs.org/docs/basic-features/typescript
+https://nextjs.org/docs/advanced-features/custom-app
+
+https://nextjs.org/telemetry
+https://nextjs.org/docs/api-reference/cli
+https://nextjs.org/docs/deployment
+https://nextjs.org/docs/going-to-production
+https://stackoverflow.blog/2022/03/30/best-practices-to-increase-the-speed-for-next-js-apps/

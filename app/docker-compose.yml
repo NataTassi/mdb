@@ -1,0 +1,24 @@
+version: "3.9"
+
+name: "mdb"
+
+services:
+  web:
+    build:
+      context: ./web
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./web/public:/app/public
+
+  db:
+    image: redis/redis-stack:latest
+    volumes:
+      - ./redis:/data
+      - ./redis/redis.conf:/redis-stack.conf
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 1s
+      timeout: 3s
+      retries: 5

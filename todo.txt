@@ -1,0 +1,14 @@
+- IMDb rating and link
+- Download trailers
+- Info popup mute button
+- Movie details
+- Finish main player
+- API validation
+- No results message
+- Improve results performance, consider placeholders
+- Downloads pipeline
+- Shows support, favorite episodes
+- Accounts, watchlist, stats and movie playback position
+- User-made movie clips, collections, playlists
+- Refactoring
+- Linter & Prettier

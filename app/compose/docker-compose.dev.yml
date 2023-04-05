@@ -1,0 +1,19 @@
+services:
+  web:
+    build:
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web/components:/app/components
+      - ./web/model:/app/model
+      - ./web/pages:/app/pages
+      - ./web/styles:/app/styles
+      - ./web/utils:/app/utils
+      - ./web/next.config.js:/app/next.config.js
+      - ./web/tsconfig.json:/app/tsconfig.json
+      
+  db:
+    ports:
+      - "6379:6379"
+      - "8001:8001"

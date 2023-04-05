@@ -1,0 +1,12 @@
+# docker
+.dockerignore
+Dockerfile
+
+# git
+.gitignore
+
+# lock
+package-lock.json
+
+# static
+/public

@@ -1,0 +1,139 @@
+What is Redis?
+
+Redis is an open source, in-memory data structure store used as a database, cache, message broker, 
+and streaming engine. Redis provides data structures such as strings, hashes, lists, sets, sorted 
+sets with range queries, bitmaps, hyperloglogs, geospatial indexes, and streams. 
+Redis has built-in replication, Lua scripting, LRU eviction, transactions, and different levels of
+on-disk persistence, and provides high availability via Redis Sentinel and automatic partitioning 
+with Redis Cluster.
+You can run atomic operations on these types, like appending to a string; incrementing the value 
+in a hash; pushing an element to a list; computing set intersection, union and difference; or 
+getting the member with highest ranking in a sorted set.
+To achieve top performance, Redis works with an in-memory dataset. Depending on your use case, 
+Redis can persist your data either by periodically dumping the dataset to disk or by appending 
+each command to a disk-based log. You can also disable persistence if you just need a feature-rich,
+networked, in-memory cache.
+See: https://redis.io/docs/about
+
+
+Redis Stack:
+
+Extends Redis with modern data models and processing engines. Redis Stack unifies and simplifies 
+the developer experience of the leading Redis modules by bundling five Redis modules: 
+RedisJSON, RediSearch, RedisGraph, RedisTimeSeries, and RedisBloom.
+In addition to all of the features of Redis OSS (core), Redis Stack supports:
+- Probabilistic data structures
+- Queryable JSON documents
+- Querying across hashes and JSON documents
+- Time series data support (ingestion & querying)
+- Graph data models with the Cypher query language
+See: https://redis.io/docs/stack/
+
+Index/Search JSON documents:
+
+Combine RedisJSON and RediSearch to index and search JSON documents.
+This enables full-text search capabilities and document retrieval based on their content.
+
+Index/Search JSON docs: https://redis.io/docs/stack/json/indexing_json/
+RediSearch: https://nimblehq.co/blog/getting-started-with-redisearch
+RediSearch query syntax: https://redis.io/docs/stack/search/reference/query_syntax
+RediSearch tokenization: https://redis.io/docs/stack/search/reference/escaping
+Stop words: https://redis.io/docs/stack/search/reference/stopwords/ 
+Tags: https://redis.io/docs/stack/search/reference/tags/
+
+
+Running Redis in Docker:
+
+To get started with Redis Stack using Docker, you first need to select a Docker image:
+redis/redis-stack contains both Redis Stack server and RedisInsight. This container is best for local development because you can use the embedded RedisInsight to visualize your data.
+redis/redis-stack-server provides Redis Stack server only. This container is best for production deployment.
+
+Starting Redis Stack server and RedisInsight:
+    docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+This command pulls and starts Redis Stack server at port 6379 and RedisInsight (data viz) at port 8001 (just open http://localhost:8001).
+
+Example of running Redis with persistence and custom config:
+1. Create a folder called redis, inside of it a file named redis.conf with the desired directives.
+2. docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 -v $(pwd)/redis/redis.conf:/redis-stack.conf -v $(pwd)/redis:/data redis/redis-stack:latest
+
+
+Connect to the server with redis-cli:
+
+- You can then connect to the server using redis-cli, just as you connect to any Redis instance.
+- If you don’t have redis-cli installed locally, you can run it from the Docker container:
+    docker exec -it redis-stack redis-cli
+Check if Redis is working properly by sending a ping command from redis-cli.
+
+
+Persistence:
+
+We use the SAVE command to perform a backup of the current dataset in Redis. The command will 
+create a snapshot containing all the data in the Redis cluster in the binary format of the 
+dump.rdb file.
+In the redis.conf file we use 'SAVE <elapsed_seconds> <changes_performed>' to indicate we want
+to save the db after <elapsed_seconds> when at least <changes_performed> were performed.
+To persist your Redis data in Docker to a local path, specify -v to configure a local volume.
+The default persistence option is RDB (Redis Database). It's a very compact single-file 
+point-in-time representation of your Redis data.
+
+
+Config files:
+
+Redis is able to start without a configuration file using a built-in default configuration, 
+however this setup is only recommended for testing and development purposes.
+The proper way to configure Redis is by providing a Redis configuration file, usually called 
+redis.conf. The redis.conf file contains a number of directives that have a very simple format:
+keyword argument1 argument2 ... argumentN
+See: https://redis.io/docs/management/config-file
+
+By default, the Redis Stack Docker containers use internal configuration files for Redis. 
+To start Redis with local configuration file, you can use the -v volume options.
+
+redis.conf:
+bind 127.0.0.1
+save 1 1
+
+The bind directive is set in order to guarantee that Redis listens on only the network interfaces 
+you are using. For example only the loopback interface (127.0.0.1) if you are accessing Redis just
+locally from the same computer, and so forth.
+The save directive will make Redis automatically dump the dataset to disk every X seconds if 
+at least Y keys changed: save X Y.
+By default, Redis uses the following settings:
+save 900 1     # every 15 minutes if at least one key changed
+save 300 10    # every 5 minutes if at least 10 keys changed
+save 60 10000  # every 60 seconds if at least 10000 keys changed
+
+
+Commands:
+
+Empty database:     flushdb
+Get config values:  config get <key> 
+
+
+Clients:
+
+Py: redis-py client https://github.com/redis/redis-py/blob/master/docs/examples/search_json_examples.ipynb
+JS: node-redis client https://github.com/redis/node-redis
+
+
+RediSearch examples:
+
+All movies:
+ft.search movies-idx '*'
+
+Action movies from the 80s:
+ft.search movies-idx '@genre:{action} @release_year:[1980 (1990]' return 2 title release_year
+
+By IMDb ID:
+ft.search movies-idx '@imdb_id:{tt0139654}' return 2 title release_year
+
+Released from 2019 on:
+ft.search movies-idx '@release_year:[2019 inf]' return 3 title title_spanish release_year
+
+By TMDb ID: 
+ft.search movies-idx '@tmdb_id:[397837 397837]' return 3 title release_year imdb_id
+
+Comedies from the 80s sorted by ascending release year:
+ft.search movies-idx '@genre:{comedy} @release_year:[1980 (1990]' return 2 title release_year sortby release_year asc
+
+Note: 'return <number>' indicates <number> attributes to include in the results, otherwise the whole docs are returned.

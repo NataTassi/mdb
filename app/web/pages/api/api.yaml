@@ -1,0 +1,219 @@
+openapi: 3.0.0
+info:
+  title: MDB API docs
+  version: 1.0.0
+paths:
+  /api/search/movies:
+    get:
+      summary: Search for movies
+      description: A list of movies matching the given criteria
+      parameters:
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: Title in English or Spanish
+        - in: query
+          name: plot
+          schema:
+            type: string
+          description: Plot keywords in English or Spanish
+        - in: query
+          name: genre
+          schema:
+            type: string
+          description: Genre in English or Spanish
+        - in: query
+          name: release_year_start
+          schema:
+            type: integer
+          description: Start of release year range
+        - in: query
+          name: release_year_end
+          schema:
+            type: integer
+          description: End of release year range (included)
+        - in: query
+          name: runtime_start
+          schema:
+            type: integer
+          description: Start of runtime range
+        - in: query
+          name: runtime_end
+          schema:
+            type: integer
+          description: End of runtime range (included)
+        - in: query
+          name: director
+          schema:
+            type: string
+          description: A director of the movie
+        - in: query
+          name: writer
+          schema:
+            type: string
+          description: Any person involved in the writing of the story or screenplay
+        - in: query
+          name: actor
+          schema:
+            type: string
+          description: An actor performing in the movie
+      responses:
+        200:
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+                  documents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MovieMetadata'
+
+  /api/movie/{imdb_id}:
+    get:
+      summary: Detailed movie information
+      description: Detailed information about a movie, including metadata, poster path, movie path and available subtitles paths.
+      parameters:
+        - in: path
+          name: imdb_id
+          schema:
+            type: string
+          description: IMDb ID of the movie
+      responses:
+        200:
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/MovieData'
+
+components:
+  schemas:
+    MovieMetadata:
+      type: object
+      required:
+        - tmdb_id
+        - imdb_id
+        - title
+        - title_spanish
+        - genres
+        - genres_spanish
+        - plot
+        - plot_spanish
+        - release_date
+        - release_year
+        - runtime
+        - directors
+        - writers
+        - cast
+        - yt_video_ids
+        - poster_path
+      properties:
+        tmdb_id:
+          type: integer
+          example: 105
+        imdb_id:
+          type: string
+          example: tt0088763
+        title:
+          type: string
+          example: Back to the Future
+        title_spanish:
+          type: string
+          example: Volver al Futuro
+        genres:
+          type: array
+          items:
+            type: string
+          example:
+            - Adventure
+            - Comedy
+            - Science Fiction
+            - Family
+        genres_spanish:
+          type: array
+          items:
+            type: string
+          example:
+            - Aventura
+            - Comedia
+            - Ciencia ficción
+            - Familia
+        plot:
+          type: string
+          example: Eighties teenager Marty McFly is accidentally sent back in time to 1955, inadvertently disrupting his parents' first meeting and attracting his mother's romantic interest. Marty must repair the damage to history by rekindling his parents' romance and - with the help of his eccentric inventor friend Doc Brown - return to 1985.
+        plot_spanish:
+          type: string
+          example: El adolescente Marty McFly es amigo de Doc, un científico al que todos toman por loco. Cuando Doc crea una máquina para viajar en el tiempo, un error fortuito hace que Marty llegue a 1955, año en el que sus futuros padres aún no se habían conocido. Después de impedir su primer encuentro, deberá conseguir que se conozcan y se casen; de lo contrario, su existencia no sería posible.
+        release_date:
+          type: string
+          format: date
+          example: "1985-07-03"
+        release_year:
+          type: integer
+          example: 1985
+        runtime:
+          type: integer
+          example: 116
+        directors:
+          type: array
+          items:
+            type: string
+          example:
+            - Robert Zemeckis
+        writers:
+          type: array
+          items:
+            type: string
+          example:
+            - Robert Zemeckis
+            - Bob Gale
+        cast:
+          type: array
+          items:
+            type: string
+          example:
+            - Michael J. Fox
+            - Christopher Lloyd
+            - Lea Thompson
+            - Crispin Glover
+            - Thomas F. Wilson
+            - Claudia Wells
+            - Marc McClure
+            - Wendie Jo Sperber
+            - George DiCenzo
+            - Frances Lee McCain
+        yt_video_ids:
+          type: array
+          items:
+            type: string
+          example:
+            - GdccQODQsIw
+            - AM28GvL8oCM
+            - qvsgGtivCgs
+        film_series:
+          type: string
+          example: Back to the Future
+        poster_path:
+          type: string
+          example: /Movies/Film series/Back to the Future/1. Back to the Future 1 (1985)/Back to the Future 1 poster.jpg
+    MovieData:
+      allOf:
+        - $ref: '#/components/schemas/MovieMetadata'
+        - type: object
+          required:
+            - movie_path
+            - subtitles_paths
+          properties:
+            movie_path:
+              type: string
+              example: /Movies/Film series/Back to the Future/1. Back to the Future 1 (1985)/Back to the Future 1.mkv
+            subtitles_paths:
+              type: array
+              items:
+                type: string
+              example:
+                - /Movies/Film series/Back to the Future/1. Back to the Future 1 (1985)/Back to the Future 1 EN.srt

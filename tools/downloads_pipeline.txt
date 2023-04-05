@@ -1,0 +1,21 @@
+Movie download links: https://yts.mx/api/v2/movie_details.json?imdb_id=<imdb_id>
+
+* Keep transmission-gtk open to execute any command
+* Transmission IDs are not reliable, they change between runs
+* Remove leading whitespace: sed 's/^[ \t]*//'
+* Change transmission creds: 
+sudo service transmission-daemon stop
+sudo vim /etc/transmission-daemon/settings.json
+Change rpc-username and rpc-password
+sudo service transmission-daemon start
+
+List movies: transmission-remote --auth mdb:mdb -l
+Add: transmission-remote --auth mdb:mdb --add <link|magnet>
+Info: transmission-remote --auth mdb:mdb -t <id> --info
+Remove: transmission-remote --auth mdb:mdb -t <id> -rad
+Last movie name: transmission-remote --auth mdb:mdb -l | tail -2 | head -1 | awk '{for (i=1; i<=10; i++) $i=""; print $0}' | sed 's/^[ \t]*//'
+ID by name: transmission-remote --auth mdb:mdb -l | grep -F "<name>" | awk '{print $1}'
+Percentage by ID: transmission-remote --auth mdb:mdb -t 1 --info | grep Percent | awk '{print $NF}'
+
+
+yt -q --progress -o "$MOVIES/Trailers/%(id)s.%(ext)s" <video_id>

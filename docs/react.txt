@@ -1,0 +1,16 @@
+What Is React?
+
+React is a declarative, efficient, and flexible JavaScript library for building user interfaces. 
+It lets you compose complex UIs from small and isolated pieces of code called “components”.
+
+References:
+https://react.dev/learn
+https://youtu.be/Tn6-PIqc4UM (React in 100 seconds - Fireship)
+https://react.dev/reference/react
+https://youtu.be/TNhaISOUy6Q (10 React Hooks Explained - Fireship)
+https://www.npmjs.com/package/prop-types
+https://react.dev/reference/react/Fragment
+https://redux.js.org/introduction/getting-started
+https://stackoverflow.com/questions/40647361/console-logging-for-react
+https://dev.to/francodalessio/understanding-the-importance-of-the-key-prop-in-react-3ag7
+https://stackoverflow.com/questions/61121856/can-i-rely-on-the-useeffect-order-in-a-component

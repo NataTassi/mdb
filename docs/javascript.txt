@@ -1,0 +1,39 @@
+Modules (since ES6):
+
+A module is a self contained unit that can expose assets to other modules using export, and acquire assets from other modules using import.
+For example:
+
+import React from 'react'; // get the React object from the react module
+
+class HelloWorld extends React.Component {
+  render() {
+    return <p>Hello, world!</p>;
+  }
+}
+export default HelloWorld; // expose the HelloWorld component to other modules
+
+In ES6 there are two kinds of exports:
+Named exports: for example export function func() {} is a named export with the name of func. Named modules can be imported using import { exportName } from 'module';. In this case, the name of the import should be the same as the name of the export. To import the func in the example, you'll have to use import { func } from 'module';. There can be multiple named exports in one module.
+Default export: is the value that will be imported from the module, if you use the simple import statement import X from 'module'. X is the name that will be given locally to the variable assigned to contain the value, and it doesn't have to be named like the origin export. There can be only one default export.
+
+A module can contain both named exports and a default export, and they can be imported together using import defaultExport, { namedExport1, namedExport3, etc... } from 'module';.
+
+
+JavaScript:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-crossorigin
+https://google.github.io/styleguide/jsguide.html
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+https://stackoverflow.com/questions/11508463/javascript-set-object-key-by-variable
+https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
+https://stackoverflow.com/questions/3463048/is-it-safe-to-delete-an-object-property-while-iterating-over-them
+https://stackoverflow.com/questions/1431094/how-do-i-replace-a-character-at-a-particular-index-in-javascript
+https://stackoverflow.com/questions/1966476/how-can-i-process-each-letter-of-text-using-javascript/22410812#22410812
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+https://stackoverflow.com/questions/14636536/how-to-check-if-a-variable-is-an-integer-in-javascript
+https://stackoverflow.com/questions/3010840/loop-through-an-array-in-javascript
+https://stackoverflow.com/questions/171251/how-can-i-merge-properties-of-two-javascript-objects-dynamically
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+https://stackoverflow.com/questions/1248081/how-to-get-the-browser-viewport-dimensions

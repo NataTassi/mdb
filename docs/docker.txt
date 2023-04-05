@@ -1,0 +1,179 @@
+What is a container?
+A container is a cross-platform runnable instance of an image. It uses a sandboxed process on your machine that is isolated from all other processes on the host machine.
+
+What is a container image?
+A container image provides an isolated filesystem, so it must contain all dependencies, configuration, scripts, binaries, etc. The image also contains other configuration for the container, such as environment variables, a default command to run, and other metadata.
+
+What is Docker?
+Docker is a popular implementation of containers that allows applications to be bundled into a container. Docker is a command-line tool to manage images, containers, volumes, and networks.
+
+What is Docker Compose?
+It can start one or more containers. It can create one or more networks and attach containers to them. It can create one or more volumes and configure containers to mount them. All of this is for use on a single host.
+
+What is Docker Swarm?
+Docker swarm has been abandoned by Docker Inc. and is not being actively maintained or supported. Docker Swarm is for running and connecting containers on multiple hosts.
+
+What is Kubernetes?
+Kubernetes (K8S) is a distributed container orchestration tool initially created by Google. As Swarm, it's used for running and connecting containers on multiple hosts.
+It offers container deployment, scaling, load balancing, and lets users integrate their logging, monitoring, and alerting solutions. 
+You provide Kubernetes with a cluster of nodes that it can use to run containerized tasks.
+You tell Kubernetes how much CPU and memory (RAM) each container needs.
+Kubernetes restarts containers that fail, replaces containers, kills containers that don't respond to your user-defined health check
+Kubernetes lets you store and manage sensitive information, such as passwords, OAuth tokens, and SSH keys.
+
+
+Installing Docker in Linux (these instructions are for Ubuntu, for Debian just replace the appearances of 'ubuntu' for 'debian'):
+
+1. Update the apt package index and install packages to allow apt to use a repository over HTTPS:
+  sudo apt-get update
+  sudo apt-get install ca-certificates curl gnupg lsb-release
+2. Add Docker’s official GPG key:
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+3. Use the following command to set up the stable repository. 
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+4. Install Docker Engine:
+  sudo apt-get update
+  sudo apt-get install docker-ce docker-ce-cli containerd.io
+5. Verify that Docker Engine is installed correctly by running the hello-world image:
+  sudo docker run hello-world
+
+
+Manage Docker as a non-root user:
+
+1. Create the docker group: sudo groupadd docker
+2. Add your user to the docker group: sudo usermod -aG docker $USER
+3. Run the following command to activate the changes to groups: newgrp docker 
+4. Verify that you can run docker commands without sudo: docker run hello-world
+This command downloads a test image and runs it in a container. When the container runs, it prints a message and exits.
+If you initially ran Docker CLI commands using sudo before adding your user to the docker group, remove the ~/.docker/ directory.
+
+
+Commands (prefixed by docker):
+
+Download and run container:                   run -d -p <host-post:container-port> --name <container-name> [<repo>:]<image-name>
+Run container:                                start <container>
+Build a container image:                      build -t [<repo>:]<image-name> <Dockerfile-dir>
+Build image from container changes:           commit <container> <new-image>
+Change container image name:                  tag <image-name> [<repo>:]<new-image-name>
+Push image to a repo:                         push [<repo>:]<image-name>[:<new-image-name>]
+Running containers (with IDs):                ps
+List all containers (with sizes):             container ls -sa
+Stop a container:                             stop <container>  
+Remove a container:                           rm <container>
+Stop and remove a container:                  rm -f <container>                                  
+List images (with id and size):               images
+Remove an image:                              rmi <image-id>                                
+Start interactive shell / execute commands:   docker exec -it <container> sh
+Copy files between host and containers:       cp <source> <destination> (reference container paths with <container>:<path>, e.g.: app-web-1:/app/file)
+Create network:                               network create my-net
+Connect container to a network at creation:   add this flags: --network <network-name> --network-alias <container-hostname>
+Connect running container to a network:       network connect <network-name> <container>
+Disconnect running container from a network:  network disconnect <network-name> <container>
+
+
+Naming images and containers:
+
+Containers have IDs and you can give them a name with the --name flag when created/pulled. 
+You can use either an ID or a name for any command that requires a container.
+If you reassign a tag or image name to another image, your image will lose its tag or name.
+
+
+Networking:
+
+Only one process on the machine (containers included) can listen to a specific port, to run
+a rebuilt image, you need to stop and remove the old container.
+Port forwardings can only be specified with the docker run and docker create commands. 
+Containers on the same network can use either the service name or aliases to connect to deach other.
+
+
+Building images:
+
+Docker can build images automatically by reading the instructions from a Dockerfile. Each line in the file creates an image layer on which subsequent layeres are built.
+Dockerfile paths are relative to the Dockerfile location.
+Decrease build times for your container images by leveraging layer caching: once a layer changes, all downstream layers have to be recreated as well. Put Dockerfile lines that change less often before.
+Security scanning: log into Docker Hub to scan your images. Run the command docker scan --login, and then scan your images using docker scan <image-name>.
+Using the docker image history command, you can see the command that was used to create each layer within an image.
+With multi-stage builds, you use multiple FROM statements in your Dockerfile. Each FROM instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don’t want in the final image. 
+By default, the stages are not named, and you refer to them by their integer number, starting with 0 for the first FROM instruction. However, you can name your stages, by adding an AS <NAME> to the FROM instruction. 
+When you build your image, you don’t necessarily need to build the entire Dockerfile including every stage. You can specify a target build stage.
+Create lightweight images: https://towardsdatascience.com/slimming-down-your-docker-images-275f0ca9337e
+
+
+Sharing images:
+
+To share Docker images, you have to use a Docker registry. The default registry is Docker Hub and is where all of the images we’ve used have come from.
+A Docker ID allows you to access Docker Hub which is the world’s largest library and community for container images. Create a Docker ID for free if you don’t have one.
+
+
+Persisting data:
+
+- Named volumes (Docker chooses the mountpoint):
+1. Create a volume with: docker volume create <volume-name>
+2. Stop and remove the app container
+3. Start the todo app container, but add the -v flag to specify a volume mount (-v <volume-name>:<mountpoint>)
+- Bind mounts (you choose the host mountpoint, great to mount your source code):
+Just start the container using the -v flag to specify the host mountpoint (-v <host-mountpoint>:<container-mountpoint>)
+
+
+Multi-container applications with Docker Compose:
+
+Docker Compose is a tool that was developed to help define and share multi-container applications.
+With Compose, we can create a YAML file to define the services and with a single command, 
+can spin everything up or tear it all down.
+
+Installation:
+
+1. sudo curl -L "https://github.com/docker/compose/releases/download/v2.11.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+2. sudo chmod +x /usr/local/bin/docker-compose
+3. docker-compose --version
+
+Commands (prefixed by docker-compose):
+
+Run the application stack:  up -d (containers, volumes and networks will be created)
+Tear it all down:           down  (containers and networks will be stopped and removed
+Rebuild images:             build (use it if you change a service’s Dockerfile or the contents of its build directory)
+Stop services:              stop
+Start services:             start
+
+Rebuild a service called 'web' and prevent recreation of services which 'web' depends on:
+
+docker-compose build web
+docker-compose up --no-deps -d web
+
+For different environments you can split your Compose configuration into different overridable files:
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+Important note about splitting your Compose config:
+By default, Compose reads two files, docker-compose.yml and an optional docker-compose.override.yml.
+By convention, the docker-compose.yml contains your base configuration. The override file, as its
+name implies, can contain configuration overrides for existing services or entirely new services.
+If a service is defined in both files, Compose merges the configurations. To use multiple override
+files, or an override file with a different name, you can use the -f option to specify the list of
+files. Compose merges files in the order they’re specified on the command line. When you use
+multiple configuration files, you must make sure all paths in the files are relative to the base 
+Compose file (the first Compose file specified with -f). This is required because override files 
+need not be valid Compose files. Override files can contain small fragments of configuration. 
+Tracking which fragment of a service is relative to which path is difficult and confusing,
+so to keep paths easier to understand, all paths must be defined relative to the base file.
+
+Docker compose file:
+
+- The version is optional since version 3.9
+- You can specify a project name with the directive 'name'
+- Services (containers in the multi-container app) are assigned by default to an isolated network
+- ports syntax: "<host-port>:<container-port>" | "port"
+- With services.<service-name>.build.target you can select a build stage to use
+- 'ports' directive: ports will be exposed to the host machine to a random port or a given port (when mapping with :), and to other services
+- 'expose' directive: ports are not exposed to host machines, only exposed to other services
+- 'healthcheck' directive: declares a check that’s run to determine whether or not containers for a service are "healthy" (overrides Dockerfile healthcheck)
+- Compose supports declaring default environment variables in an environment file named .env placed in the project directory
+- 'depends_on' directive: set services to start before a service, if you add 'condition: service_healthy', the required service will be checked with its 'healthcheck'
+- Use services.<service-name>.build.context to tell compose where to find the Dockerfile for build that service (. by default)
+- Use services.<service-name>.build.dockerfile to tell compose the name of the Dockerfile (Dockerfile by default)
+
+
+Free up disk space:
+
+- Clean build cache: docker builder prune -a
+- Remove unused images and containers
+- Remove many things at once (see --help): docker system prune -a

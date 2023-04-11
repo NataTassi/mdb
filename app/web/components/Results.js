@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import globalStyles from 'styles/Results.global.js';
 import TrailerPlayer from 'components/TrailerPlayer';
 import { strings, ENGLISH } from 'resources/strings';
 import { BACKGROUND_COLOR, METADATA_DESC_COLOR } from 'resources/colors';
@@ -12,19 +13,21 @@ import Row from 'react-bootstrap/Row';
 const HIDE_DETAILS = -1;
 
 export default function Results(props) {
-  const [activeResult, setActiveResult] = useState(HIDE_DETAILS);
+  const [activeDetails, setActiveDetails] = useState(HIDE_DETAILS);
   const [detailsContent, setDetailsContent] = useState(<div/>);
   
+  const openDetails = activeDetails !== HIDE_DETAILS;
   const language = props.language;
   const results = props.results;
 
   useEffect(() => {
-    if (activeResult !== HIDE_DETAILS) {
+    if (activeDetails !== HIDE_DETAILS) {
       const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 
       const spanStyles = {color: METADATA_DESC_COLOR};
       const inEnglish = props.language === ENGLISH;
-      const metadata = props.results[activeResult];
+      const metadata = props.results[activeDetails];
+      const url = `/watch/${metadata.imdb_id}`;
       const title = inEnglish ? metadata.title : metadata.title_spanish;
       const titleAndYear = `${title} (${metadata.release_year})`;
       const plot = inEnglish ? metadata.plot : metadata.plot_spanish;
@@ -42,15 +45,31 @@ export default function Results(props) {
           />
 
           <Container fluid className='p-4'>
-            <Row>
-              <Col className='fs-5'>
-                <div>{titleAndYear}</div>
+            <Row className='mt-1'>
+              <Col className='d-flex align-items-center'>
+                <a href={url} style={{ textDecoration: 'none', fontSize: '1.25vw' }}>
+                  <button href={url} className='rounded d-flex align-items-center justify-content-center'>
+                    <i className='fa-solid fa-circle-play info-play-details sibling mx-1'/>
+                    <div className='sibling mx-1'>{strings['play'][language]}</div>
+                  </button>
+                </a>
+                <i 
+                  onClick={() => { alert('Add to watchlist was clicked'); }} 
+                  className='fa-solid fa-circle-plus info-button ms-3'
+                  style={{ fontSize: '2.2vw' }}
+                />
               </Col>
-            </Row> 
+            </Row>
+            <Row className='mt-4'>
+              <Col><div className='fs-5'>{titleAndYear}</div></Col>
+            </Row>
             <Row className='mt-3'>
               <Col>{plot}</Col>
             </Row>
-            <Row className='mt-5'>
+            <Row className='mt-2'>
+              <Col><hr className='divider'></hr></Col>
+            </Row>
+            <Row className='mt-2'>
               <Col><span style={spanStyles}>{strings['runtime_short'][language]}:</span> {formattedRuntime}</Col>
             </Row>
             <Row className='mt-2'>
@@ -75,7 +94,7 @@ export default function Results(props) {
     else {
       setDetailsContent(<div/>);
     }
-  }, [activeResult]);
+  }, [activeDetails]);
 
 
   if (props.loading) {
@@ -109,7 +128,8 @@ export default function Results(props) {
           number={number}
           metadata={metadata}
           language={language}
-          setActiveResult={setActiveResult}
+          openDetails={openDetails}
+          onOpenDetails={setActiveDetails}
         />
       </Col>
     ));
@@ -130,11 +150,13 @@ export default function Results(props) {
 
   return (
     <>
+      <style jsx global>{globalStyles}</style>
+
       <Container fluid style={props.style}>{rows}</Container>
     
       <Modal
-        show={activeResult !== HIDE_DETAILS}
-        onHide={() => setActiveResult(HIDE_DETAILS)}
+        show={openDetails}
+        onHide={() => setActiveDetails(HIDE_DETAILS)}
         dialogClassName='details-modal'
       >
         <Modal.Body

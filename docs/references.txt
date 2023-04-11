@@ -27,6 +27,9 @@ https://stackoverflow.com/questions/7198282/how-to-make-div-occupy-remaining-hei
 https://codingbff.medium.com/difference-between-css-position-absolute-versus-relative-35f064384c6
 https://react-bootstrap.github.io/components/modal
 https://stackoverflow.com/questions/4622808/html-changing-colors-of-specific-words-in-a-string-of-text
+https://stackoverflow.com/questions/3705804/css-positioning-elements-next-to-each-other
+https://stackoverflow.com/questions/2041388/how-to-remove-the-underline-for-anchorslinks
+https://stackoverflow.com/questions/19014250/rerender-view-on-browser-resize-with-react
 
 API:
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Status

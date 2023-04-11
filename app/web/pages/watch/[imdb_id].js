@@ -35,10 +35,10 @@ export default function WatchVideo() {
   }
 
   const videoJsOptions = {
+    fill: true,
     autoplay: true,
     controls: true,
     responsive: true,
-    fill: true,
     noUITitleAttributes: true,
     playbackRates: [0.5, 0.75, 1, 1.25, 1.5],
     sources: [{

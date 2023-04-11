@@ -1,6 +1,28 @@
 import css from 'styled-jsx/css';
+import { METADATA_DESC_COLOR } from 'resources/colors';
 
 export default css.global`
+	.sibling {
+		float: left;
+		display: inline;
+	}
+
+	.divider {
+		border-top: 1px solid #bbb;
+	}
+	
+	.div-arrow-down:after {
+		content: "";
+		position: absolute;
+		z-index: 1;
+		top: -6px;
+		left: calc(50% - 6px);
+		width: 12px;
+		height: 12px;
+		transform: rotate(45deg);
+		background-color: ${METADATA_DESC_COLOR};
+	}
+
   	.poster {
   	  background: black;
   	  position: relative;
@@ -75,6 +97,9 @@ export default css.global`
 	}
 	.info-button-play:hover {
 		filter: drop-shadow(0px 1px 4px white);
+	}
+	.info-play-details {
+		color: black;
 	}
 
 	.details-modal {

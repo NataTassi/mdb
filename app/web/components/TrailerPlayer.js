@@ -14,8 +14,10 @@ export default function TrailerPlayer(props) {
   return (
     <div
       onMouseLeave={(e) => {
-        const currentTime = Math.max(playerRef.current.currentTime() - 3, 0);
-        trailerPlaybackPosition.set(trailer_id, currentTime);
+        if (playerRef.current) {
+          const currentTime = Math.max(playerRef.current.currentTime() - 3, 0);
+          trailerPlaybackPosition.set(trailer_id, currentTime);
+        }
       }}
     >
       <BasicVideoPlayer 
@@ -72,12 +74,15 @@ export default function TrailerPlayer(props) {
 
         options={{
           loop: true,
+          controls: true,
+          responsive: true,
           width: props.width,
           height: props.height,
-          responsive: true,
-          controls: true,
           controlBar: {
-            pictureInPictureToggle: false
+            pictureInPictureToggle: false,
+            volumePanel: {
+              inline: false
+            }
           },
           sources: [{
             src: `/Movies/Trailers/${trailer_id}.${format}`,

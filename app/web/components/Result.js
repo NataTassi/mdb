@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TrailerPlayer from 'components/TrailerPlayer';
-import globalStyles from 'styles/Result.global.js';
 import { createPopper } from '@popperjs/core';
 import useDebounce from 'utils/useDebounce';
 import { BACKGROUND_COLOR } from 'resources/colors';
@@ -11,8 +10,7 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-
-const POPPER_DELAY = 500;
+const POPPER_DELAY = 400;
 
 
 export default function Result(props) {
@@ -24,7 +22,7 @@ export default function Result(props) {
   const [popperInstance, setPopperInstance] = useState(null);
   const [showPopper, setShowPopper] = useState(false);
   const debouncedShowPopper = useDebounce(showPopper, POPPER_DELAY);
-  const [eagerLoad, setEagerLoad] = useState(false);
+//   const [eagerLoad, setEagerLoad] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0});
   const [popperContent, setPopperContent] = useState(<div/>);
 
@@ -73,7 +71,7 @@ export default function Result(props) {
   }, []);
 
   useEffect(() => {
-    if (debouncedShowPopper) {
+    if (debouncedShowPopper && !props.openDetails) {
       const trailerHeight = 1.2 * dimensions.width;
 
       setPopperContent((
@@ -119,7 +117,7 @@ export default function Result(props) {
               </Col>
               <Col md={4} className='d-flex justify-content-end align-items-center '>
                 <i 
-                  onClick={() => props.setActiveResult(props.number)} 
+                  onClick={() => props.onOpenDetails(props.number)} 
                   className='fa-solid fa-circle-chevron-down info-button' 
                   style={{ fontSize: '2.2vw' }}
                 />
@@ -158,46 +156,41 @@ export default function Result(props) {
         ],
       }));
     }
-  }, [debouncedShowPopper]);
+  }, [debouncedShowPopper, props.openDetails]);
 
   return (
-    <>
-      <style jsx global>{globalStyles}</style>
-
-        <div ref={resultElem}>
-          <a href={url}>
-            <div 
-              ref={contentElem}
-              className='poster' 
-            >
-              <Image 
-                src={metadata.poster_path} 
-                fill
-                sizes="15vw"
-                // onMouseEnter={() => setEagerLoad(true)}
-                // loading={eagerLoad ? 'eager' : 'lazy'}
-                alt="Poster"
-              />
-            </div>
-          </a>
-
-          <div 
-            id='tooltip'
-            ref={popperElem} 
-            className='text-white border border-dark'
-            style={{ 
-              width: 2 * dimensions.width,
-              height: 1.6 * dimensions.height,
-              backgroundColor: BACKGROUND_COLOR,
-              zIndex: 1,
-              borderRadius: '15px',
-              overflow: 'hidden' // hide sharp corners from the video
-            }}
-          >
-            {popperContent}
-          </div>
-
+    <div ref={resultElem}>
+      <a href={url}>
+        <div 
+          ref={contentElem}
+          className='poster' 
+        >
+          <Image 
+            src={metadata.poster_path} 
+            fill
+            sizes="15vw"
+            // onMouseEnter={() => setEagerLoad(true)}
+            // loading={eagerLoad ? 'eager' : 'lazy'}
+            alt="Poster"
+          />
         </div>
-    </>
+      </a>
+
+      <div 
+        id='tooltip'
+        ref={popperElem} 
+        className='text-white border border-dark'
+        style={{ 
+          width: 2 * dimensions.width,
+          height: 1.6 * dimensions.height,
+          backgroundColor: BACKGROUND_COLOR,
+          zIndex: 1,
+          borderRadius: '15px',
+          overflow: 'hidden' // hide sharp corners from the video
+        }}
+      >
+        {popperContent}
+      </div>
+    </div>
   );
 }

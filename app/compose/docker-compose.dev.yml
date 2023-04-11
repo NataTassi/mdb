@@ -7,6 +7,7 @@ services:
     volumes:
       - ./web/components:/app/components
       - ./web/model:/app/model
+      - ./web/resources:/app/resources
       - ./web/pages:/app/pages
       - ./web/styles:/app/styles
       - ./web/utils:/app/utils

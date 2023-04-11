@@ -3,11 +3,11 @@ import TrailerPlayer from 'components/TrailerPlayer';
 import globalStyles from 'styles/Result.global.js';
 import { createPopper } from '@popperjs/core';
 import useDebounce from 'utils/useDebounce';
-import { ENGLISH } from 'model/strings';
+import { BACKGROUND_COLOR } from 'resources/colors';
+import { ENGLISH } from 'resources/strings';
 import Image from 'next/image';
 
 import Container from 'react-bootstrap/Container';
-import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
@@ -27,22 +27,16 @@ export default function Result(props) {
   const [eagerLoad, setEagerLoad] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0});
   const [popperContent, setPopperContent] = useState(<div/>);
-  const [detailsContent, setDetailsContent] = useState(<div/>);
-  const [showDetails, setShowDetails] = useState(false);
 
-  const background = '#111111';
   const inEnglish = props.language === ENGLISH;
   const metadata = props.metadata;
   const url = `/watch/${metadata.imdb_id}`;
 
-  const plot = inEnglish ? metadata.plot : metadata.plot_spanish;
-  const genres = inEnglish ? metadata.genres : metadata.genres_spanish;
+  const formattedRuntime = `${Math.floor(metadata.runtime / 60)}h ${metadata.runtime % 60}m`;
   const title = inEnglish ? metadata.title : metadata.title_spanish;
   const titleAndYear = `${title} (${metadata.release_year})`;
-  const formattedRuntime = `${Math.floor(metadata.runtime / 60)}h ${metadata.runtime % 60}m`;
+  const genres = inEnglish ? metadata.genres : metadata.genres_spanish;
   const formattedGenres = genres.join(' • ');
-  const dateOptions = {year: 'numeric', month: 'long', day: 'numeric'};
-  const formattedReleaseDate = new Date(metadata.release_date).toLocaleDateString(inEnglish ? "en-EN" : "es-ES", dateOptions); 
 
 
   useEffect(() => {
@@ -79,56 +73,6 @@ export default function Result(props) {
   }, []);
 
   useEffect(() => {
-    if (showDetails) {
-      const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-
-      const spanStyles = {color: '#AAAAAA'};
-
-      setDetailsContent((
-        <>
-          <TrailerPlayer 
-            width={viewportWidth / 2}
-            height={viewportWidth / 2 * 3/5}
-            metadata={metadata} 
-          />
-
-          <Container fluid className='p-4'>
-            <Row>
-              <Col className='fs-5'>
-                <div>{titleAndYear}</div>
-              </Col>
-            </Row> 
-            <Row className='mt-3'>
-              <Col>{plot}</Col>
-            </Row>
-            <Row className='mt-5'>
-              <Col><span style={spanStyles}>{inEnglish ? 'Runtime' : 'Duración'}:</span> {formattedRuntime}</Col>
-            </Row>
-            <Row className='mt-2'>
-              <Col><span style={spanStyles}>{inEnglish ? 'Release date' : 'Fecha de lanzamiento'}:</span> {formattedReleaseDate}</Col>
-            </Row>
-            <Row className='mt-2'>
-              <Col><span style={spanStyles}>{inEnglish ? 'Genres' : 'Géneros'}:</span> {genres.join(', ')}</Col>
-            </Row>
-            <Row className='mt-2'>
-              <Col><span style={spanStyles}>{inEnglish ? 'Cast' : 'Reparto'}:</span> {metadata.cast.join(', ')}</Col>
-            </Row>
-            <Row className='mt-2'>
-              <Col><span style={spanStyles}>{inEnglish ? 'Writers' : 'Escritores'}:</span> {metadata.writers.join(', ')}</Col>
-            </Row>
-            <Row className='mt-2'>
-              <Col><span style={spanStyles}>{inEnglish ? 'Directors' : 'Directores'}:</span> {metadata.directors.join(', ')}</Col>
-            </Row>
-          </Container>
-        </>
-      ));
-    }
-    else {
-      setDetailsContent(<div/>);
-    }
-  }, [showDetails]);
-
-  useEffect(() => {
     if (debouncedShowPopper) {
       const trailerHeight = 1.2 * dimensions.width;
 
@@ -157,7 +101,7 @@ export default function Result(props) {
               }
             }}
           >
-            <Row className='mt-3 mx-1'>
+            <Row className='mt-2 mx-1'>
               <Col md={2} className='d-flex justify-content-end align-items-center '>
                 <a href={url} style={{ fontSize: '2.2vw' }}>
                   <i className='fa-solid fa-circle-play info-button-play'/>
@@ -175,7 +119,7 @@ export default function Result(props) {
               </Col>
               <Col md={4} className='d-flex justify-content-end align-items-center '>
                 <i 
-                  onClick={() => setShowDetails(true)} 
+                  onClick={() => props.setActiveResult(props.number)} 
                   className='fa-solid fa-circle-chevron-down info-button' 
                   style={{ fontSize: '2.2vw' }}
                 />
@@ -230,8 +174,8 @@ export default function Result(props) {
                 src={metadata.poster_path} 
                 fill
                 sizes="15vw"
-                onMouseEnter={() => setEagerLoad(true)}
-                loading={eagerLoad ? 'eager' : 'lazy'}
+                // onMouseEnter={() => setEagerLoad(true)}
+                // loading={eagerLoad ? 'eager' : 'lazy'}
                 alt="Poster"
               />
             </div>
@@ -244,7 +188,7 @@ export default function Result(props) {
             style={{ 
               width: 2 * dimensions.width,
               height: 1.6 * dimensions.height,
-              backgroundColor: background,
+              backgroundColor: BACKGROUND_COLOR,
               zIndex: 1,
               borderRadius: '15px',
               overflow: 'hidden' // hide sharp corners from the video
@@ -253,22 +197,6 @@ export default function Result(props) {
             {popperContent}
           </div>
 
-          <Modal
-            show={showDetails}
-            onHide={() => setShowDetails(false)}
-            dialogClassName='details-modal'
-          >
-            <Modal.Body
-              style={{
-                backgroundColor: background,
-                color: 'white',
-                padding: 0,
-                margin: 0
-              }}
-            >
-              {detailsContent}
-            </Modal.Body>
-          </Modal>
         </div>
     </>
   );

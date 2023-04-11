@@ -2,7 +2,7 @@ import globalStyles from 'styles/App.global.js';
 import useDebounce from 'utils/useDebounce';
 import Results from 'components/Results';
 import React, { useState } from 'react';
-import { ENGLISH } from 'model/strings';
+import { ENGLISH } from 'resources/strings';
 import { jsonFetcher } from 'utils/api';
 import Navbar from 'components/Navbar';
 import useSWR from 'swr';
@@ -39,10 +39,10 @@ export default function App() {
       />
 
       <Results 
+        language={language}
         results={results} 
         loading={loading}
         error={error} 
-        language={language}
         colsPerRow='6' 
         style={{ padding: '3% 7%' }}
       />

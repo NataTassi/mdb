@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 // Fix 'Warning: useLayoutEffect does nothing on the server...':
 React.useLayoutEffect = React.useEffect;
 
-import { strings, ENGLISH, SPANISH } from 'model/strings';
+import { strings, ENGLISH, SPANISH } from 'resources/strings';
 
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';

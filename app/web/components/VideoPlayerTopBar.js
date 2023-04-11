@@ -1,7 +1,7 @@
 import videojs from 'video.js';
 
-
 var Component = videojs.getComponent('Component');
+
 
 export var TopBar = videojs.extend(Component, {
   constructor: function(player, options) {

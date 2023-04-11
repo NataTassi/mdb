@@ -1,4 +1,3 @@
-- Centralize UI strings 
 - Finish main player
 - IMDb rating and link
 - Download trailers

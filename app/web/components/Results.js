@@ -47,11 +47,15 @@ export default function Results(props) {
           <Container fluid className='p-4'>
             <Row className='mt-1'>
               <Col className='d-flex align-items-center'>
-                <a href={url} style={{ textDecoration: 'none', fontSize: '1.25vw' }}>
-                  <button href={url} className='rounded d-flex align-items-center justify-content-center'>
-                    <i className='fa-solid fa-circle-play info-play-details sibling mx-1'/>
+                <a 
+                  href={url} 
+                  className='info-button-play rounded'
+                  style={{ textDecoration: 'none', fontSize: '1.25vw', background: 'white', color: 'black', padding: '0.75%' }} 
+                >
+                  <div href={url} className='d-flex align-items-center justify-content-center'>
+                    <i className='fa-solid fa-circle-play info-icon-play-details sibling mx-1'/>
                     <div className='sibling mx-1'>{strings['play'][language]}</div>
-                  </button>
+                  </div>
                 </a>
                 <i 
                   onClick={() => { alert('Add to watchlist was clicked'); }} 
@@ -67,7 +71,7 @@ export default function Results(props) {
               <Col>{plot}</Col>
             </Row>
             <Row className='mt-2'>
-              <Col><hr className='divider'></hr></Col>
+              <Col><hr className='divider div-arrow-down'></hr></Col>
             </Row>
             <Row className='mt-2'>
               <Col><span style={spanStyles}>{strings['runtime_short'][language]}:</span> {formattedRuntime}</Col>

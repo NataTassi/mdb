@@ -22,8 +22,7 @@ export default function Result(props) {
   const [popperInstance, setPopperInstance] = useState(null);
   const [showPopper, setShowPopper] = useState(false);
   const debouncedShowPopper = useDebounce(showPopper, POPPER_DELAY);
-//   const [eagerLoad, setEagerLoad] = useState(false);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0});
+  const [posterDimensions, setPosterposterDimensions] = useState({ width: 0, height: 0});
   const [popperContent, setPopperContent] = useState(<div/>);
 
   const inEnglish = props.language === ENGLISH;
@@ -40,24 +39,7 @@ export default function Result(props) {
   useEffect(() => {
     const width = contentElem.current.offsetWidth;
     const height = contentElem.current.offsetHeight;
-
-    setPopperInstance(createPopper(
-      contentElem.current, 
-      popperElem.current, 
-      { 
-        placement: 'top',
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset: [0, - 1.3 * height]
-            },
-          }
-        ],
-       }
-    ));
-
-    setDimensions({ width: width, height: height});
+    setPosterposterDimensions({ width: width, height: height});
 
     const showEvents = ['mouseenter', 'focus'];
     const hideEvents = ['mouseleave', 'blur'];
@@ -72,13 +54,13 @@ export default function Result(props) {
 
   useEffect(() => {
     if (debouncedShowPopper && !props.openDetails) {
-      const trailerHeight = 1.2 * dimensions.width;
+      const trailerHeight = 1.2 * posterDimensions.width;
 
       setPopperContent((
         <>
           <TrailerPlayer 
             descriptionRef={descriptionRef}
-            width={2*dimensions.width} 
+            width={2*posterDimensions.width} 
             height={trailerHeight} 
             metadata={metadata} 
           />
@@ -138,23 +120,33 @@ export default function Result(props) {
           </Container>
         </>
       ));
+
+      setPopperInstance(createPopper(
+        contentElem.current, 
+        popperElem.current, 
+        { 
+          placement: 'top',
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, - 1.3 * posterDimensions.height]
+              },
+            }
+          ],
+         }
+      ));
+
       popperElem.current.setAttribute('show-content', ''); // show popper
-      popperInstance.update(); // update popper position
     }
     else { 
       popperElem.current.removeAttribute('show-content'); // hide popper
       setPopperContent(<div/>);
-    }
- 
-    if (popperInstance) {
-      // Toggle popper event listeners for performance reasons
-      popperInstance.setOptions((options) => ({
-        ...options,
-        modifiers: [
-          ...options.modifiers,
-          { name: 'eventListeners', enabled: debouncedShowPopper },
-        ],
-      }));
+
+      if (popperInstance) {
+        popperInstance.destroy();
+        setPopperInstance(null);
+      }
     }
   }, [debouncedShowPopper, props.openDetails]);
 
@@ -169,8 +161,6 @@ export default function Result(props) {
             src={metadata.poster_path} 
             fill
             sizes="15vw"
-            // onMouseEnter={() => setEagerLoad(true)}
-            // loading={eagerLoad ? 'eager' : 'lazy'}
             alt="Poster"
           />
         </div>
@@ -181,8 +171,8 @@ export default function Result(props) {
         ref={popperElem} 
         className='text-white border border-dark'
         style={{ 
-          width: 2 * dimensions.width,
-          height: 1.6 * dimensions.height,
+          width: 2 * posterDimensions.width,
+          height: 1.6 * posterDimensions.height,
           backgroundColor: BACKGROUND_COLOR,
           zIndex: 1,
           borderRadius: '15px',

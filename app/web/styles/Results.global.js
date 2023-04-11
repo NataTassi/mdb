@@ -1,28 +1,7 @@
 import css from 'styled-jsx/css';
-import { METADATA_DESC_COLOR } from 'resources/colors';
+import { BACKGROUND_COLOR, INFO_BUTTON_COLOR } from 'resources/colors';
 
 export default css.global`
-	.sibling {
-		float: left;
-		display: inline;
-	}
-
-	.divider {
-		border-top: 1px solid #bbb;
-	}
-	
-	.div-arrow-down:after {
-		content: "";
-		position: absolute;
-		z-index: 1;
-		top: -6px;
-		left: calc(50% - 6px);
-		width: 12px;
-		height: 12px;
-		transform: rotate(45deg);
-		background-color: ${METADATA_DESC_COLOR};
-	}
-
   	.poster {
   	  background: black;
   	  position: relative;
@@ -39,11 +18,6 @@ export default css.global`
 		display: block;
 	}
 
-	// Don't show play button on autoplay
-	.vjs-waiting {
-		visibility: hidden;
-	}
-
   	@media only screen and (max-width: 991px) {
     	.video-js .vjs-control-bar { 
           height: 20%;
@@ -57,6 +31,11 @@ export default css.global`
 		  font-size: 1.5vw;
     	}
   	} 
+
+	// Don't show play button on autoplay
+	.vjs-waiting {
+		visibility: hidden;
+	}
 
 	.vjs-icon-placeholder:before,
 	.vjs-remaining-time,
@@ -72,10 +51,6 @@ export default css.global`
 		font-size: 1vw;
 	}
 
-	// .video-js .vjs-big-play-button {
-	// 	font-size: 300%;
-	// }
-
   	// time tooltip on mouse position
   	.video-js .vjs-progress-control:hover .vjs-mouse-display {
   		z-index: 2;
@@ -89,8 +64,8 @@ export default css.global`
 		color: grey;
 	}
 	.info-button:hover {
-		color: #BBBBBB;
-		filter: drop-shadow(0px 1px 1px #BBBBBB);
+		color: ${INFO_BUTTON_COLOR};
+		filter: drop-shadow(0px 1px 1px ${INFO_BUTTON_COLOR});
 	}
 	.info-button-play {
 		color: white;
@@ -98,7 +73,7 @@ export default css.global`
 	.info-button-play:hover {
 		filter: drop-shadow(0px 1px 4px white);
 	}
-	.info-play-details {
+	.info-icon-play-details {
 		color: black;
 	}
 
@@ -109,8 +84,18 @@ export default css.global`
 		-webkit-border-radius: 15px !important;
 		-moz-border-radius: 15px !important;
 		border-radius: 15px !important;
-		background-color: #111111;
+		background-color: ${BACKGROUND_COLOR};
 		overflow: hidden;
 		filter: drop-shadow(0px 0px 1px grey);
+	}
+
+	// Place elements next to each other
+	.sibling {
+		float: left;
+		display: inline;
+	}
+
+	.divider {
+		border-top: 1px solid ${INFO_BUTTON_COLOR};
 	}
 `;

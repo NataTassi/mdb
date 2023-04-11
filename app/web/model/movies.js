@@ -50,7 +50,7 @@ export async function subtitlesPaths(directoryPath, filePrefix) {
     const paths = [];
 
     for (const lang of LANGUAGES) {
-        const path = pathPrefix + lang + '.srt';
+        const path = pathPrefix + lang + '.vtt';
         if (await urlExists(path)) paths.push(path);
     }
 

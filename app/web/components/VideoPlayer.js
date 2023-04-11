@@ -18,6 +18,18 @@ export default function VideoPlayer(props) {
       const placeholderEl = placeholderRef.current;
       const videojsElem = document.createElement('video-js');
       videojsElem.className = 'video-js vjs-big-play-centered';
+
+      for (const path of props.subtitles) {
+        const trackElem = document.createElement('track');
+        const lang = path.endsWith('EN.vtt') ? 'en' : 'es';
+        console.debug(path);
+        trackElem.setAttribute('kind', 'captions');
+        trackElem.setAttribute('src', path);
+        trackElem.setAttribute('srclang', lang);
+        trackElem.setAttribute('label', lang === 'en' ? 'English' : 'Español');
+        videojsElem.appendChild(trackElem);
+      }
+
       const videoElement = placeholderEl.appendChild(videojsElem);
 
       const player = (playerRef.current = videojs(videoElement, options, () => {
@@ -25,10 +37,10 @@ export default function VideoPlayer(props) {
         onReady && onReady(player);
       }));
 
-      // player.seekButtons({
-      //   forward: 10,
-      //   back: 10
-      // });
+      player.seekButtons({
+        forward: 10,
+        back: 10
+      });
 
       // Add the TopBar as a child of the player and provide it some text in its options.
       player.addChild('TopBar', {

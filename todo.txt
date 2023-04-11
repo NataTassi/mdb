@@ -1,8 +1,9 @@
+- Centralize UI strings 
+- Finish main player
 - IMDb rating and link
 - Download trailers
 - Info popup mute button
 - Movie details
-- Finish main player
 - API validation
 - No results message
 - Improve results performance, consider placeholders

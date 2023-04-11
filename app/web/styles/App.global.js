@@ -21,14 +21,6 @@ export default css.global`
     min-width: 1rem;
   }
 
-  .card {
-    background: black;
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-top: 120%; /* 5:6 aspect ratio */
-  }
-
   .vertical-center {
     margin: 0;
     position: absolute;

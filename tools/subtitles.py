@@ -1,3 +1,4 @@
+#!/bin/python3
 import os
 import sys
 import zipfile
@@ -251,8 +252,9 @@ def get_subtitles_in_english_and_spanish(imdb_id: str, output_dir: str, filename
 
 
 if __name__ == '__main__':
-	if len(sys.argv) != 3:
-		print(f"Usage: {sys.argv[0]} <imdb_id> <filename>")
-	else:
-		get_subtitles_in_english_and_spanish(sys.argv[1], os.getcwd(), sys.argv[2])
+	# if len(sys.argv) != 3:
+	# 	print(f"Usage: {sys.argv[0]} <imdb_id> <filename>")
+	# else:
+	# 	get_subtitles_in_english_and_spanish(sys.argv[1], os.getcwd(), sys.argv[2])
+    srt_to_vtt(sys.argv[1])
 

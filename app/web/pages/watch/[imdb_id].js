@@ -69,6 +69,7 @@ export default function WatchVideo() {
       title={data.title} 
       options={videoJsOptions} 
       onReady={handlePlayerReady} 
+      subtitles={data.subtitles_paths}
     />
   );
 }

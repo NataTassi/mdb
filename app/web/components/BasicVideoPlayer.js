@@ -1,5 +1,6 @@
 import React from 'react';
 import videojs from 'video.js';
+import 'videojs-seek-buttons/dist/videojs-seek-buttons.min.js';
 
 
 export default function BasicVideoPlayer(props) {
@@ -19,6 +20,11 @@ export default function BasicVideoPlayer(props) {
         player.log("Player is ready");
         onReady && onReady(player);
       }));
+
+      player.seekButtons({
+        forward: 10,
+        back: 10
+      });
 
     } else { // You can update the player here:
       const player = playerRef.current;

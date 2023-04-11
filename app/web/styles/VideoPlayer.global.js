@@ -9,7 +9,6 @@ export default css.global`
     height: 100%;
   }
 
-
   @media only screen and (max-width: 991px) {
     .video-js .vjs-top-bar {
       height: 20%;
@@ -25,9 +24,29 @@ export default css.global`
     }
     .video-js .vjs-control-bar { 
       height: 15%;
+		  font-size: 1.5vw;
     }
   } 
-  
+
+  .vjs-icon-placeholder:before,
+	.vjs-remaining-time,
+	.vjs-playback-rate-value
+	{
+    text-shadow: none; // remove button glow
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	}
+
+  .vjs-menu-item-text,
+	.vjs-playback-rate {
+		font-size: 1.5vw;
+	}
+
+  // Remove caption settings option
+  .vjs-texttrack-settings {
+    display: none;
+  }
 
   .video-js .vjs-top-bar {
     background: rgba(43,51,63,.7);
@@ -49,7 +68,6 @@ export default css.global`
     opacity: 1;
     visibility: visible;
   }
-
   .vjs-has-started.vjs-user-inactive.vjs-playing .vjs-top-bar {
     opacity: 0;
     visibility: hidden;
@@ -66,55 +84,6 @@ export default css.global`
     // border: solid;
   }
 
-
-  .video-js .vjs-picture-in-picture-control { display: none; }
-
-  .video-js .vjs-play-control {
-    width: 8%;
-  }
-
-  .video-js .vjs-play-control .vjs-icon-placeholder:before {
-    font-size: 5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .video-js .vjs-seek-button {
-  }
-
-  .video-js .vjs-volume-panel.vjs-volume-panel-vertical {
-    width: 8%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .video-js .vjs-mute-control {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-  }
-  .video-js .vjs-mute-control .vjs-icon-placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-  }
-
-  .video-js .vjs-mute-control .vjs-icon-placeholder:before {
-    font-size: 4em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .video-js .vjs-progress-control {
-    flex: auto;
-    font-size: 2em;
-  } 
   // time tooltip on mouse position
   .video-js .vjs-progress-control:hover .vjs-mouse-display {
     z-index: 2;
@@ -124,49 +93,11 @@ export default css.global`
     z-index: 1;
   }
 
-  .video-js .vjs-remaining-time {
-    width: 8%;
-    font-size: 2em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .video-js .vjs-playback-rate {
-    width: 6%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // border: solid;
-  }
-
-  .video-js .vjs-playback-rate-value {
-    -webkit-font-smoothing: antialiased;
-    font-style: normal;
-    font-feature-settings: normal;
-    font-variant: normal;
-    line-height: 1;
-    text-rendering: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .video-js .vjs-playback-rate-value::before {
     content: "\f62a";
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
-    font-size: 2em;
     color: white;
-  }
-
-  .video-js .vjs-fullscreen-control {
-    width: 6%;
-  }
-  .video-js .vjs-fullscreen-control .vjs-icon-placeholder:before {
-    font-size: 5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   // remove buttons glow

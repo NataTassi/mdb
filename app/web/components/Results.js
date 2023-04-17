@@ -15,6 +15,8 @@ const HIDE_DETAILS = -1;
 export default function Results(props) {
   const [activeDetails, setActiveDetails] = useState(HIDE_DETAILS);
   const [detailsContent, setDetailsContent] = useState(<div/>);
+
+  const closeDetails = () => setActiveDetails(HIDE_DETAILS);
   
   const openDetails = activeDetails !== HIDE_DETAILS;
   const language = props.language;
@@ -38,6 +40,18 @@ export default function Results(props) {
 
       setDetailsContent((
         <>
+          <i 
+            onClick={closeDetails} 
+            className='fa-solid fa-circle-xmark info-button ms-3'
+            style={{ 
+              position: 'absolute',
+              top: '15px',
+              right: '15px',
+              fontSize: '2.2vw',
+              zIndex: 1
+            }}
+          />
+
           <TrailerPlayer 
             width={viewportWidth / 2}
             height={viewportWidth / 2 * 3/5}
@@ -160,7 +174,7 @@ export default function Results(props) {
     
       <Modal
         show={openDetails}
-        onHide={() => setActiveDetails(HIDE_DETAILS)}
+        onHide={closeDetails}
         dialogClassName='details-modal'
       >
         <Modal.Body

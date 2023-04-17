@@ -18,4 +18,4 @@ ID by name: transmission-remote --auth mdb:mdb -l | grep -F "<name>" | awk '{pri
 Percentage by ID: transmission-remote --auth mdb:mdb -t 1 --info | grep Percent | awk '{print $NF}'
 
 
-yt -q --progress -o "$MOVIES/Trailers/%(id)s.%(ext)s" <video_id>
+yt -q --progress -o "$MOVIES_DIR/Trailers/%(id)s.%(ext)s" <video_id>

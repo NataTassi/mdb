@@ -1,7 +1,7 @@
   ## MDb
   Video streaming platform built for personal use and educational purposes. 
 
-  ## Tech stack:
+  ## Tech stack
   * React
   * Next.js
   * Video.js

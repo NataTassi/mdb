@@ -1,2 +1,0 @@
-redis == 4.2.2
-requests >= 2.22.0

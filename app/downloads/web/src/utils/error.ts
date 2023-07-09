@@ -17,9 +17,3 @@ export function errorObject(title: ErrorTitle, detail: string) {
         detail : detail
     };
 }
-
-export function extraParams() {
-    return errorObject(ErrorTitle.BAD_REQUEST, 'Unrecognized extra parameters');
-}
-
-export const jsonFetcher = (...args) => fetch(...args).then((res) => res.json());

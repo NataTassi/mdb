@@ -46,6 +46,7 @@ https://github.com/vercel/swr/issues/110
 https://reactjs.org/docs/lists-and-keys.html
 https://stackabuse.com/how-to-style-hover-in-react/
 https://stackoverflow.com/questions/54426177/how-can-i-add-shadow-to-a-fontawesome-svg-icons
+https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
 
 Bundle resources (including local plain text files):
 https://webpack.js.org/guides/asset-modules/

@@ -59,6 +59,19 @@ You can think of the node_modules folder like a cache for the external modules t
 This is because there's no reason to store copies of all your dependent modules in your own GitHub project. The exact version you were using is known and stored in your package.json or package-lock.json so at any time you or anyone else using your project can download your code and then retch all the other dependent modules from their original source (including even the exact same versions you were using). So, there isn't any reason to store a separate duplicate copy of all those dependent modules in your own project. That would just be wasteful and would complicate upgrading to a newer version of all those dependent modules.
 
 
+How to update each dependency in package.json to the latest version?
+
+npm-check-updates upgrades your package.json dependencies to the latest versions, ignoring specified versions.
+Maintains existing semantic versioning policies, i.e. "react": "^16.0.4" to "react": "^18.2.0".
+Only modifies package.json file. Run npm install to update your installed packages and package-lock.json.
+# Install the npm-check-updates package globally
+npm i -g npm-check-updates
+# Update package.json file
+ncu -u
+# Install updates
+npm install
+
+
 Packages:
 - Prettier: opinionated code formatter, enforces a consistent style.
 - Jest: JavaScript testing.

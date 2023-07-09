@@ -177,3 +177,16 @@ Free up disk space:
 - Clean build cache: docker builder prune -a
 - Remove unused images and containers
 - Remove many things at once (see --help): docker system prune -a
+
+
+Restart policies:
+https://stackoverflow.com/questions/61725195/difference-in-docker-restart-policy-between-on-failure-and-unless-stopped
+
+
+Why docker container exits immediately?
+The docker container needs a process (last command) to keep running, otherwise the container will exit/stop. 
+
+How to automatically start a service when running a docker container?
+Docker images do not save running processes. Therefore, RUN commands execute only during the docker build phase and stop
+after the build is completed. Instead, you need to specify the command when the container is started using the CMD or 
+ENTRYPOINT commands.

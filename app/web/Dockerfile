@@ -7,6 +7,7 @@ COPY package.json package-lock.json* ./
 RUN npm install
 # Remember to mount all source code subdirectories (don't mount /app)
 EXPOSE 3000
+WORKDIR /app/src
 ENTRYPOINT ["npm", "run", "dev"]
 
 

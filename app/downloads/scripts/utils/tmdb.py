@@ -8,9 +8,7 @@ def check_api_key():
     If it isn't, an error message will notify you and the program will exit.
     """
 
-    tmdb_api_key = os.environ.get("TMDB_API_KEY")
-
-    if not tmdb_api_key:
+    if not os.environ.get("TMDB_API_KEY"):
         print("(-) TMDB_API_KEY env var not set", file=sys.stderr)
         print(file=sys.stderr)
         print("In Linux:    export TMDB_API_KEY=<movies_dir>", file=sys.stderr)

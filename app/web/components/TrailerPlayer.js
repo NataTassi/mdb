@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { urlExistsBrowser } from 'utils/file';
+import { urlExists } from 'utils/url';
 import BasicVideoPlayer from 'components/BasicVideoPlayer';
 
 const trailerPlaybackPosition = new Map();
@@ -9,7 +9,7 @@ export default function TrailerPlayer(props) {
   const playerRef = useRef(null);
   const trailer_id = props.metadata.yt_video_ids[0];
 
-  const format = urlExistsBrowser(`/Movies/Trailers/${trailer_id}.webm`) ? 'webm' : 'mp4';
+  const format = urlExists(`/Movies/Trailers/${trailer_id}.webm`) ? 'webm' : 'mp4';
 
   return (
     <div

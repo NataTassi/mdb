@@ -22,3 +22,23 @@ services:
       interval: 1s
       timeout: 3s
       retries: 5
+
+  downloads:
+    build:
+      context: ./downloads
+      args:
+        - TMDB_API_KEY = ${TMDB_API_KEY}
+        - TRANSMISSION_USER = ${TRANSMISSION_USER}
+        - TRANSMISSION_PASS = ${TRANSMISSION_PASS}
+    volumes:
+      - ./downloads/web/src:/app/src
+      - ./downloads/scripts:/app/scripts
+      - ./downloads/web/nodemon.json:/app/nodemon.json
+      - ./downloads/web/tsconfig.json:/app/tsconfig.json
+      - ./web/public/Movies/Downloads:/downloads
+      - ./downloads/transmission/config:/var/lib/transmission-daemon/.config/transmission-daemon
+    ports:
+      - 8080:8080
+      - 9091:9091
+    env_file:
+      - .env  

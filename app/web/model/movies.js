@@ -1,4 +1,4 @@
-import { urlExists } from 'utils/file';
+import { urlExists } from 'utils/url';
 import { isInt } from 'utils/number';
 
 const LANGUAGES = ['EN', 'ES'];

@@ -1,8 +1,9 @@
+#!/usr/bin/python3
 import os
 import sys
 import requests
 import subprocess
-from utils import downloader
+from utils import imdb, downloader
 
 BASE_YTS_URL = 'https://yts.mx/api/v2/movie_details.json'
 DEFAULT_QUALITY = '1080p'
@@ -10,28 +11,19 @@ DEFAULT_QUALITY = '1080p'
 TRANSMISSION_USER = os.environ.get("TRANSMISSION_USER")
 TRANSMISSION_PASS = os.environ.get("TRANSMISSION_PASS")
 
-def valid_imdb_id(id):
-    return (len(id) == 9 or len(id) == 10) and \
-        id[:2] == 'tt' and \
-        id[2:].isdigit()
-
 
 def download_movie_info(imdb_id):
     return requests.get(BASE_YTS_URL, params={'imdb_id': imdb_id})
 
 
 def main():
-    with open('/home/nata/Desktop/test.txt', 'w') as f:
-        f.write('The script is being called!')
-
     argc = len(sys.argv)
 
-    if argc != 2 or not valid_imdb_id(sys.argv[1]):
+    if argc != 2 or not imdb.valid_imdb_id(sys.argv[1]):
         print(f"Use: {sys.argv[0]} <imdb_id>")
     else:
         if not TRANSMISSION_USER or not TRANSMISSION_PASS:
-            print("You must set the TRANSMISSION_USER and TRANSMISSION_PASS env vars")
-            sys.exit(0)
+            sys.exit("You must set the TRANSMISSION_USER and TRANSMISSION_PASS env vars")
 
         imdb_id = sys.argv[1]
 
@@ -39,13 +31,13 @@ def main():
             response = download_movie_info(imdb_id)
 
             if response.status_code != 200:
-                sys.exit("Movie info request failed with code: " + response.status_code)
+                sys.exit(f"Movie info request failed with code: {response.status_code}")
 
             response_data = response.json()
             request_status = response_data['status']
 
             if request_status != 'ok':
-                sys.exit("Movie info request failed with status: " + request_status)
+                sys.exit(f"Movie info request failed with status: {request_status}")
 
             movie_info = response_data['data']['movie']
             
@@ -65,7 +57,7 @@ def main():
                 print(f"Downloading torrent for movie with ID {imdb_id} and quality {chosen_quality}")   
                 filename = imdb_id + '.torrent'
 
-                if download_file(url, filename):
+                if downloader.download_file(url, filename):
                     print("Torrent downloaded")
 
                     res = subprocess.run(

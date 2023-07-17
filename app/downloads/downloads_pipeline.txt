@@ -18,6 +18,7 @@ https://help.ubuntu.com/community/TransmissionHowTo
 https://raspberrypi.stackexchange.com/questions/4378/transmission-permission-denied-on-usb-disk
 https://github.com/transmission/transmission/blob/main/docs/Editing-Configuration-Files.md
 https://wiki.theory.org/BitTorrentSpecification
+https://stackoverflow.com/questions/33243121/abuse-curl-to-communicate-with-redis
 
 * Web interface: http://localhost:9091
 * Transmission IDs are not reliable, they change between runs
@@ -32,11 +33,15 @@ Last movie name: transmission-remote --auth mdb:mdb -l | tail -2 | head -1 | awk
 ID by name: transmission-remote --auth mdb:mdb -l | grep -F "<name>" | awk '{print $1}'
 Percentage by ID: transmission-remote --auth mdb:mdb -t 1 --info | grep Percent | awk '{print $NF}'
 
+Get partition name by UUID:
+lsblk -o NAME,UUID | grep 56DE92B0DE92883F | cut -f 1 -d ' ' | cut -c 7-
 
+Download trailer by YouTube video ID:
 yt -q --progress -o "$MOVIES_DIR/Trailers/%(id)s.%(ext)s" <video_id> 
 
 curl -X POST http://127.0.0.1:8080/download_movie -d 'imdb_id=tt0120737'
 
+Send command to Redis database:
 REDIS_CMD="set '<key>' '<value>'" OR REDIS_CMD="get '<key>'" OR REDIS_CMD="del '<key>'"
 exec 3<>/dev/tcp/127.0.0.1/6379 && echo -e "$REDIS_CMD\r\nquit\r\n" >&3 && head -n -1 <&3
 

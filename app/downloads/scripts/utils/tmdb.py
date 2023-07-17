@@ -13,4 +13,4 @@ def check_api_key():
         print(file=sys.stderr)
         print("In Linux:    export TMDB_API_KEY=<movies_dir>", file=sys.stderr)
         print("In Windows:  set TMDB_API_KEY=<movies_dir>", file=sys.stderr)
-        sys.exit()
+        sys.exit(1)

@@ -2,7 +2,7 @@ import os
 import requests
 
 
-def download_file(url, filename, directory='.'):
+def download_file(url, filename='', directory='.'):
     """ 
     Download file from the specified URL and save it with the given name into the given directory
     or the current directory if not specified. 
@@ -18,6 +18,9 @@ def download_file(url, filename, directory='.'):
 
     if not os.path.exists(directory):
         os.makedirs(directory)
+
+    if not filename:
+        filename = url.split('/')[-1]
 
     path = os.path.join(directory, filename)
 

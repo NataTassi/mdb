@@ -31,6 +31,7 @@ https://stackoverflow.com/questions/3705804/css-positioning-elements-next-to-eac
 https://stackoverflow.com/questions/2041388/how-to-remove-the-underline-for-anchorslinks
 https://stackoverflow.com/questions/19014250/rerender-view-on-browser-resize-with-react
 https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
+https://www.npmjs.com/package/videojs-youtube
 
 API:
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
@@ -47,6 +48,7 @@ https://reactjs.org/docs/lists-and-keys.html
 https://stackabuse.com/how-to-style-hover-in-react/
 https://stackoverflow.com/questions/54426177/how-can-i-add-shadow-to-a-fontawesome-svg-icons
 https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+https://blog.postman.com/how-to-create-a-rest-api-with-node-js-and-express/
 
 Bundle resources (including local plain text files):
 https://webpack.js.org/guides/asset-modules/
@@ -60,7 +62,13 @@ https://fontawesome.com/v5/docs/web/advanced/css-pseudo-elements
 
 Movie download pipeline:
 https://yts.mx/api
+https://developer.themoviedb.org/docs
+https://developer.themoviedb.org/reference/search-movie
+https://opensubtitles.stoplight.io/docs/opensubtitles-api/e3750fd63a100-getting-started
 https://www.maketecheasier.com/how-to-download-torrents-from-the-command-line-in-ubuntu/
+https://help.ubuntu.com/community/TransmissionHowTo
+https://cli-ck.io/transmission-cli-user-guide/
+Torrent downloads testing: https://nyaa.si/?f=0&c=1_0&q=subtitles&s=size&o=asc&p=5
 
 Video.js:
 https://videojs.com/guides/options/

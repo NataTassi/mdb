@@ -83,3 +83,10 @@ Docker image:
 See https://github.com/nodejs/docker-node
 About node:alpine image variant: 
 Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed
+
+
+Refs:
+https://stackoverflow.com/questions/23450534/how-to-call-a-python-function-from-node-js
+https://blog.postman.com/how-to-create-a-rest-api-with-node-js-and-express/
+https://github.com/remy/nodemon#application-isnt-restarting
+https://medium.com/@dinubhagya97/how-to-set-up-a-node-js-typescript-express-project-ddf4b8fe4af6

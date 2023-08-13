@@ -17,9 +17,9 @@ app.use(cors());
 
 const downloadBodyParser = bodyParser.urlencoded({ extended: false })
 
-// app.get('/', (req, res) => {
-//     res.send("I love you gorgeous <3");
-// });
+app.get('/status', (req, res) => {
+    res.send("Feeling really good man");
+});
 
 app.post('/download_movie', downloadBodyParser, (req, res) => {
     const imdbID = req.body.imdb_id;
@@ -61,8 +61,8 @@ app.post('/download_movie', downloadBodyParser, (req, res) => {
                     () => {
                         console.log(`Torrent for movie with ID ${imdbID} downloaded`);
                         const child = spawn('env', [`IMDB_ID=${imdbID}`, '/app/scripts/add.sh']);
-                        child.stdout.on('data', data => console.log(`transmission-remote stdout: ${data}`));
-                        child.stderr.on('data', data => console.log(`transmission-remote stderr: ${data}`));
+                        child.stdout.on('data', data => console.log(`add.sh stdout: ${data}`));
+                        child.stderr.on('data', data => console.log(`add.sh stderr: ${data}`));
                     },
                     error => console.error(error)
                 );
@@ -71,8 +71,7 @@ app.post('/download_movie', downloadBodyParser, (req, res) => {
 
         }).on('error', error => console.error(error));
 
-        res.status(200).send(`URL: ${metadataUrl}\n`);
-        // res.status(200).send("Download started\n");
+        res.status(200).send("Download started\n");
   }
 })
 

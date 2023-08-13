@@ -37,3 +37,8 @@ https://stackoverflow.com/questions/171251/how-can-i-merge-properties-of-two-jav
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
 https://stackoverflow.com/questions/1248081/how-to-get-the-browser-viewport-dimensions
+
+Typescript:
+https://khalilstemmler.com/blogs/typescript/node-starter-project/
+https://stackoverflow.com/questions/62096269/cant-run-my-node-js-typescript-project-typeerror-err-unknown-file-extension
+https://medium.com/@kartikio/setup-node-ts-local-development-environment-with-docker-and-hot-reloading-922db9016119

@@ -22,4 +22,8 @@ export function extraParams() {
     return errorObject(ErrorTitle.BAD_REQUEST, 'Unrecognized extra parameters');
 }
 
+export function invalidImdbID() {
+    return errorObject(ErrorTitle.BAD_REQUEST, 'Invalid IMDb ID');
+}
+
 export const jsonFetcher = (...args) => fetch(...args).then((res) => res.json());

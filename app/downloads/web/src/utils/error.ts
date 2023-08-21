@@ -10,10 +10,14 @@ export const statusByTitle = {
     [ErrorTitle.METHOD_NOT_ALLOWED] : 405
 };
 
-export function errorObject(title: ErrorTitle, detail: string) {
-    return {
-        status : statusByTitle[title],
-        title : title,
-        detail : detail
-    };
+export function error(title: ErrorTitle, detail: string) {
+    return title + ' - ' + detail;
+}
+
+export function extraParams() {
+    return error(ErrorTitle.BAD_REQUEST, 'Unrecognized extra parameters');
+}
+
+export function invalidImdbID() {
+    return error(ErrorTitle.BAD_REQUEST, 'Invalid IMDb ID');
 }

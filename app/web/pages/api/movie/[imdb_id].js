@@ -1,15 +1,17 @@
 import { directoryPath, filePrefix, moviePath, subtitlesPaths, validImdbID } from 'model/movies';
-import { errorObject, ErrorTitle, extraParams } from 'utils/api';
+import { errorObject, ErrorTitle, statusByTitle, extraParams, invalidImdbID } from 'utils/api';
 import { searchMovies } from 'pages/api/search/movies';
 
-export default async function handler(req, res) {
-    const {imdb_id} = req.query;
+const BAD_REQUEST = statusByTitle[ErrorTitle.BAD_REQUEST];
 
-    if (!validImdbID(imdb_id)) {
-        res.status(400).json(errorObject(ErrorTitle.BAD_REQUEST, 'Invalid IMDb ID'));
+export default async function handler(req, res) {
+    const {imdb_id: imdbId} = req.query;
+
+    if (!validImdbID(imdbId)) {
+        res.status(BAD_REQUEST).json(invalidImdbID());
     }
     else if (Object.keys(req.query).length != 1) {
-        res.status(400).json(extraParams());
+        res.status(BAD_REQUEST).json(extraParams());
     }
     else {
         const { status, response } = await searchMovies(req.query);

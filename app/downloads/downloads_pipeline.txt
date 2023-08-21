@@ -39,11 +39,12 @@ lsblk -o NAME,UUID | grep 56DE92B0DE92883F | cut -f 1 -d ' ' | cut -c 7-
 Download trailer by YouTube video ID:
 yt -q --progress -o "$MOVIES_DIR/Trailers/%(id)s.%(ext)s" <video_id> 
 
-curl -X POST http://127.0.0.1:8080/download_movie -d 'imdb_id=tt0120737'
+curl -X POST http://127.0.0.1:8080/download_movie -d "imdb_id=$IMDB_ID"
 
 Send command to Redis database:
 REDIS_CMD="set '<key>' '<value>'" OR REDIS_CMD="get '<key>'" OR REDIS_CMD="del '<key>'"
 exec 3<>/dev/tcp/127.0.0.1/6379 && echo -e "$REDIS_CMD\r\nquit\r\n" >&3 && head -n -1 <&3
+Or use redis.sh (more trustworthy)
 
 Downloads server tasks:
 - Get movie info
@@ -57,3 +58,5 @@ Downloads server tasks:
 Movie status endpoint
 
 Persistent priority queue with Redis
+
+Limit API usage

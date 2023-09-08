@@ -1,5 +1,4 @@
 #!/bin/bash
-REDIS_CMD="get 'torrent:$TR_TORRENT_NAME'"
-IMDB_ID=$(exec 3<>/dev/tcp/db/6379 && echo -e "$REDIS_CMD\r\nquit\r\n" >&3 && head -2 <&3 | tail -1)
-# /app/scripts/get_subtitles.py $IMDB_ID en
-# echo "'$TR_TORRENT_NAME' downloaded in directory '$TR_TORRENT_DIR' at $TR_TIME_LOCALTIME" >> /downloads/log.txt
+IMDB_ID=`$SCRIPTS/redis.sh -g "torrent:$TR_TORRENT_NAME" 2>/dev/null`
+$SCRIPTS/log.sh "$IMDB_ID downloaded"
+# $SCRIPTS/subtitles.py $IMDB_ID en

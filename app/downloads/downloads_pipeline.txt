@@ -55,6 +55,8 @@ Downloads server tasks:
 - Get metadata
 - Add movie to database
 
+Logs
+
 Movie status endpoint
 
 Persistent priority queue with Redis

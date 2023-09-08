@@ -1,6 +1,6 @@
 #!/bin/bash
 IMDB_ID=$1
-TORRENT_NAME=`/app/scripts/redis.sh -g $IMDB_ID 2>/dev/null`
+TORRENT_NAME=`$SCRIPTS/redis.sh -g $IMDB_ID 2>/dev/null`
 
 if [ ! -z "${TORRENT_NAME}" ]; then
     TORRENT_ID=`transmission-remote --auth mdb:mdb -l | grep -F "${TORRENT_NAME}" | awk '{print \$1}'`

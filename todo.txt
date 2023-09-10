@@ -1,3 +1,4 @@
+- Translate film series names
 - Downloads pipeline
 - Finish main player
 - IMDb rating and link

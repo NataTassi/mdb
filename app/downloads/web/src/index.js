@@ -44,7 +44,7 @@ app.post('/download_movie', downloadBodyParser, (req, res) => {
         const child = spawn('/app/scripts/add.sh', [`${imdbID}`]);
         child.stdout.on('data', data => console.log(`add.sh stdout: ${data}`));
         child.stderr.on('data', data => console.log(`add.sh stderr: ${data}`));
-        res.status(200).send("Download started\n");
+        res.status(200).send("OK\n");
     }
 });
 

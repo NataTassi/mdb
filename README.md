@@ -10,6 +10,9 @@
   * Python
   * Docker
 
+## Notes
+  * Every service composing this app is connected to the default network created by Docker Compose. If you get "ERROR: could not find an available, non-overlapping IPv4 address pool among the defaults to assign to the network" when starting the app, you have to edit /etc/docker/daemon.json (as root) and add an additional address pool (the chosen IP range shouln't overlap with any other network you are in, like a VPN), then restart docker.service so the changes can be applied with "sudo systemctl restart docker".
+
 ## Screenshots
 
 <img src="https://i.imgur.com/SuYFeOu.png" title="Home">

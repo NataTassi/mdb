@@ -156,6 +156,8 @@ need not be valid Compose files. Override files can contain small fragments of c
 Tracking which fragment of a service is relative to which path is difficult and confusing,
 so to keep paths easier to understand, all paths must be defined relative to the base file.
 
+Networking in Compose: https://docs.docker.com/compose/networking/
+
 Docker compose file:
 
 - The version is optional since version 3.9
@@ -190,3 +192,6 @@ How to automatically start a service when running a docker container?
 Docker images do not save running processes. Therefore, RUN commands execute only during the docker build phase and stop
 after the build is completed. Instead, you need to specify the command when the container is started using the CMD or 
 ENTRYPOINT commands.
+
+ERROR: could not find an available, non-overlapping IPv4 address pool among the defaults to assign to the network:
+https://stackoverflow.com/questions/43720339/docker-error-could-not-find-an-available-non-overlapping-ipv4-address-pool-am

@@ -1,12 +1,22 @@
 #!/bin/bash
 IMDB_ID=$1
-TORRENT_NAME=`$SCRIPTS/redis.sh -g $IMDB_ID 2>/dev/null`
 
-if [ ! -z "${TORRENT_NAME}" ]; then
-    TORRENT_ID=`transmission-remote --auth mdb:mdb -l | grep -F "${TORRENT_NAME}" | awk '{print \$1}'`
-    STATUS=`transmission-remote --auth mdb:mdb -t ${TORRENT_ID} --info | grep Percent | awk '{print $NF}'`
+if [[ `$SCRIPTS/redi.sh -g movie:$IMDB_ID 2>/dev/null` ==  WRONGTYPE* ]]; then
+    STATUS="Available"
 else
-    STATUS="Not available"
+    TORRENT_NAME=`$SCRIPTS/redi.sh -g $IMDB_ID 2>/dev/null`
+
+    if [ ! -z "${TORRENT_NAME}" ]; then
+        TORRENT_ID=`transmission-remote --auth mdb:mdb -l | grep -F "${TORRENT_NAME}" | awk '{print \$1}'`
+
+        if [ -z ${TORRENT_ID} ]; then
+            STATUS="Invalid state"
+        else
+            STATUS=`transmission-remote --auth mdb:mdb -t ${TORRENT_ID} --info | grep Percent | awk '{print $NF}'`
+        fi
+    else
+        STATUS="Not available"
+    fi
 fi
 
 echo $STATUS

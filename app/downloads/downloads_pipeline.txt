@@ -39,7 +39,8 @@ lsblk -o NAME,UUID | grep 56DE92B0DE92883F | cut -f 1 -d ' ' | cut -c 7-
 Download trailer by YouTube video ID:
 yt -q --progress -o "$MOVIES_DIR/Trailers/%(id)s.%(ext)s" <video_id> 
 
-curl -X POST http://127.0.0.1:8080/download_movie -d "imdb_id=$IMDB_ID"
+Download movie: curl -X POST http://localhost:8080/download_movie -d "imdb_id=$IMDB_ID"
+Get movie status: curl http://localhost:8080/status?imdb_id=${IMDB_ID}
 
 Send command to Redis database:
 REDIS_CMD="set '<key>' '<value>'" OR REDIS_CMD="get '<key>'" OR REDIS_CMD="del '<key>'"

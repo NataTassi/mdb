@@ -108,6 +108,7 @@ Commands:
 
 Empty database:     flushdb
 Get config values:  config get <key> 
+List indexes:       ft._list   
 
 
 Clients:

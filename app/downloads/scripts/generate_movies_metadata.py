@@ -20,8 +20,6 @@ def generate_movie_metadata(movie_path: str, movie_dir: str, movie_name: str, fi
             film_series, poster=True):
 
             print(f"(+) '{movie_dir}': metadata generated", flush=True)
-    else:
-        print(f"(!) '{movie_dir}': metadata found", flush=True)
 
 
 if __name__ == '__main__':

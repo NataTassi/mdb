@@ -1,10 +1,10 @@
 #!/bin/bash
 IMDB_ID=$1
 
-if [[ `$SCRIPTS/redi.sh -g movie:$IMDB_ID 2>/dev/null` ==  WRONGTYPE* ]]; then
+if [[ `$SCRIPTS_DIR/redi.sh -g movie:$IMDB_ID 2>/dev/null` ==  WRONGTYPE* ]]; then
     STATUS="Available"
 else
-    TORRENT_NAME=`$SCRIPTS/redi.sh -g $IMDB_ID 2>/dev/null`
+    TORRENT_NAME=`$SCRIPTS_DIR/redi.sh -g $IMDB_ID 2>/dev/null`
 
     if [ ! -z "${TORRENT_NAME}" ]; then
         TORRENT_ID=`transmission-remote --auth mdb:mdb -l | grep -F "${TORRENT_NAME}" | awk '{print \$1}'`

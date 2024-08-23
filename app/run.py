@@ -20,6 +20,7 @@ else:
 
     movies_path = 'web/public/Movies'
     subprocess.run(f'sudo mount -a && ! mountpoint {movies_path} && sudo mount --bind $MOVIES_DIR {movies_path}', shell=True)
+    subprocess.run('cp downloads/transmission/settings.json downloads/transmission/transmission-daemon', shell=True)
     cmd = f"docker compose -f docker-compose.yml -f compose/docker-compose.{argv[1]}.yml".split(' ') + argv[2:]
     os.execvp('docker', cmd)
 

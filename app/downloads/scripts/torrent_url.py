@@ -4,7 +4,7 @@ import requests
 from utils import imdb
 
 BASE_YTS_URL = 'https://yts.mx/api/v2/movie_details.json'
-DEFAULT_QUALITY = '1080p'
+DEFAULT_QUALITY = '720p'
 
 def main():
     argc = len(sys.argv)

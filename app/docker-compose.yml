@@ -1,5 +1,3 @@
-version: "3.9"
-
 name: "mdb"
 
 services:
@@ -34,12 +32,12 @@ services:
         - OPENSUBTITLES_USER = ${OPENSUBTITLES_USER}
         - OPENSUBTITLES_PASS = ${OPENSUBTITLES_PASS}
     volumes:
-      - ./downloads/web/src:/app/src
+      - ./downloads/web/src:/app/web/src
+      - ./downloads/web/nodemon.json:/app/web/nodemon.json
+      - ./downloads/web/tsconfig.json:/app/web/tsconfig.json
       - ./downloads/scripts:/app/scripts
-      - ./downloads/web/nodemon.json:/app/nodemon.json
-      - ./downloads/web/tsconfig.json:/app/tsconfig.json
       - ./web/public/Movies/Downloads:/downloads
-      - ./downloads/transmission/config:/var/lib/transmission-daemon/.config/transmission-daemon
+      - ./downloads/transmission/transmission-daemon:/app/transmission
     ports:
       - 8080:8080
       - 9091:9091

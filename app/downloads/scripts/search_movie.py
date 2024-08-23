@@ -60,7 +60,7 @@ def main():
     argc = len(sys.argv)
 
     if (argc != 2 and argc != 3) or (argc == 3 and not sys.argv[2].isdigit()):
-        print(f"Use: {sys.argv[0]} <movie> [<result_number>]")
+        print(f"Usage: {sys.argv[0]} <movie> [<result_number>]")
     else:
         try:
             movie_to_search = sys.argv[1]

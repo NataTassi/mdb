@@ -1,13 +1,10 @@
-FROM ubuntu:latest as development
-RUN apt update
-RUN apt install transmission-daemon curl python3 python3-pip -y
-COPY scripts/get_nodejs.sh ./
-SHELL ["/bin/bash", "-i", "-c"]
-RUN chmod +x get_nodejs.sh && ./get_nodejs.sh && rm get_nodejs.sh
-COPY scripts/requirements.txt ./
-RUN pip3 install -r requirements.txt
-WORKDIR /app
-COPY web/package.json web/package-lock.json* ./
+FROM node:current-alpine
+RUN apk update && apk add --no-cache bash curl transmission-daemon transmission-remote transmission-extra python3 py3-pip
+WORKDIR /app/scripts
+COPY scripts/requirements.txt .
+RUN pip install --break-system-packages --no-cache-dir -r requirements.txt
+WORKDIR /app/web
+COPY web/package.json web/package-lock.json* /app/web/
 RUN npm install
 EXPOSE 8080 9091
 ENV TRANSMISSION_USER=${TRANSMISSION_USER}
@@ -16,5 +13,6 @@ ENV TMDB_API_KEY=${TMDB_API_KEY}
 ENV OPENSUBTITLES_KEY=${OPENSUBTITLES_KEY}
 ENV OPENSUBTITLES_USER=${OPENSUBTITLES_USER}
 ENV OPENSUBTITLES_PASS=${OPENSUBTITLES_PASS}
-ENV SCRIPTS="/app/scripts"
-CMD chmod -R +x /app/scripts && /app/scripts/start.sh
+ENV SCRIPTS_DIR="/app/scripts"
+RUN chmod -R +x ${SCRIPTS_DIR}
+CMD transmission-daemon --config-dir /app/transmission && npm run start:dev

@@ -31,7 +31,8 @@ Info: transmission-remote --auth mdb:mdb -t <id> --info
 Remove: transmission-remote --auth mdb:mdb -t <id> -rad
 Last movie name: transmission-remote --auth mdb:mdb -l | tail -2 | head -1 | awk '{for (i=1; i<=10; i++) $i=""; print $0}' | sed 's/^[ \t]*//'
 ID by name: transmission-remote --auth mdb:mdb -l | grep -F "<name>" | awk '{print $1}'
-Percentage by ID: transmission-remote --auth mdb:mdb -t 1 --info | grep Percent | awk '{print $NF}'
+Percentage by ID: transmission-remote --auth mdb:mdb -t <id> --info | grep Percent | awk '{print $NF}'
+Exit transmission: killall transmission-daemon
 
 Get partition name by UUID:
 lsblk -o NAME,UUID | grep 56DE92B0DE92883F | cut -f 1 -d ' ' | cut -c 7-
@@ -39,6 +40,7 @@ lsblk -o NAME,UUID | grep 56DE92B0DE92883F | cut -f 1 -d ' ' | cut -c 7-
 Download trailer by YouTube video ID:
 yt -q --progress -o "$MOVIES_DIR/Trailers/%(id)s.%(ext)s" <video_id> 
 
+export IMDB_ID=tt1535108
 Download movie: curl -X POST http://localhost:8080/download_movie -d "imdb_id=$IMDB_ID"
 Get movie status: curl http://localhost:8080/status?imdb_id=${IMDB_ID}
 
